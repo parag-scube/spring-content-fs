@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app="filesApp">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="files.js"></script>
+  </head>
+  <body>
+    <div ng-controller="FilesListController as filesList">
+	    <h1>Files</h1>
+	    
+	    <section style="display: table; width: 100%;">
+		  <header style="display: table-row;">
+		    <div style="display: table-cell;">File Name</div>
+		    <div style="display: table-cell;">Length</div>
+		    <div style="display: table-cell;">Create Date</div>
+		    <div style="display: table-cell;">Summary</div>
+		    <div style="display: table-cell;">Created By</div>
+		    <div style="display: table-cell;">Action</div>
+		  </header>
+		  <div style="display: table-row;" ng-repeat="file in filesList.files">
+		    <div style="display: table-cell;"><a href="{{filesList.getHref(file)}}" type={{file.mimeType}} download={{file.name}}>{{file.name}}</a></div>
+		    <div style="display: table-cell;"><label>{{file.contentLength}}</label></div>
+		    <div style="display: table-cell;"><label>{{file.createDt}}</label></div>
+		    <div style="display: table-cell;"><label>{{file.summary}}</label></div>
+		    <div style="display: table-cell;"><label>{{file.createdBy}}</label></div>
+		    <div style="display: table-cell;"><a href="{{filesList.deleteFile(file)}}" type={{file.mimeType}}>Delete</a></div>
+		  </div>
+		</section>
+		
+	    
+	    <h2>New File</h2>
+	    <input type="file" id="file" name="file"/>
+	    <input type="summary" id="summary" name="summary" ng-model="filesList.summary" placeholder="Summary"/>
+		<button ng-click="filesList.upload()">Upload</button>
+		
+		<h2>Search By Query</h2>
+    	<input type="text" id="key" name="key" placeholder="Search By" ng-model="filesList.searchKey" />
+    	<input type="text" id="value" name="value" placeholder="Search Value" ng-model="filesList.searchValue" />
+    	<button ng-click="filesList.search()">Search</button>
+		
+    </div>
+    
+  </body>
+</html>
